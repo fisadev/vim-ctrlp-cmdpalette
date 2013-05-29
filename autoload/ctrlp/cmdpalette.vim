@@ -48,7 +48,7 @@ function! ctrlp#cmdpalette#init()
 python << endofpython
 import vim
 vim.command('redir => commands_list')
-vim.command('silent execute "command"')
+vim.command('silent command')
 vim.command('redir END')
 commands = [x[4:].split(' ')[0]
             for x in vim.eval('commands_list').split('\n')
