@@ -62,9 +62,6 @@ custom_commands = [x[4:].split()[0] + '\\t(custom command)'
 if custom_commands[0].split('\\t')[0] == 'Name':
     del custom_commands[0]
 
-with open('/home/fisa/devel/vim-ctrlp-cmdpalette/x.txt', 'w') as f:
-    f.write('\n'.join(custom_commands))
-
 all_commands = custom_commands + internal_commands
 
 vim.command('return split("%s", "XX_SEPARATOR_XX")' % 'XX_SEPARATOR_XX'.join(all_commands))
