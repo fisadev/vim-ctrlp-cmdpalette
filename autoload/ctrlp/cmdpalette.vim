@@ -24,10 +24,14 @@ let s:cmdpalette_var = {
 	\ 'accept': 'ctrlp#cmdpalette#accept',
 	\ 'lname': 'cmdpalette',
 	\ 'sname': 'cmdp',
-	\ 'type': 'line',
+	\ 'type': 'tabs',
 	\ 'sort': 0,
 	\ }
 
+" Pre-load the internal vim commands
+python << endofpython
+internal_commands = ['testing\\tinternal testing',]
+endofpython
 
 " Append s:cmdpalette_var to g:ctrlp_ext_vars
 if exists('g:ctrlp_ext_vars') && !empty(g:ctrlp_ext_vars)
@@ -42,14 +46,25 @@ endif
 function! ctrlp#cmdpalette#init()
 python << endofpython
 import vim
-vim.command('redir => commands_list')
+# obtain the custom commands
+vim.command('redir => custom_commands')
 vim.command('silent command')
 vim.command('redir END')
-commands = [x[4:].split(' ')[0]
-            for x in vim.eval('commands_list').split('\n')
-            if x.strip()]
 
-vim.command('return split("%s")' % ' '.join(commands))
+# convert to list, remove empties, discard 4 first columns and take first word
+custom_commands = [x[4:].split()[0] + '\\t(custom command)'
+                   for x in vim.eval('custom_commands').split('\n')
+                   if x.strip()]
+# remove header
+if custom_commands[0].split('\\t')[0] == 'Name':
+    del custom_commands[0]
+
+with open('/home/fisa/devel/vim-ctrlp-cmdpalette/x.txt', 'w') as f:
+    f.write('\n'.join(custom_commands))
+
+all_commands = custom_commands + internal_commands
+
+vim.command('return split("%s", "XX_SEPARATOR_XX")' % 'XX_SEPARATOR_XX'.join(all_commands))
 endofpython
 endfunction
 
