@@ -30,8 +30,10 @@ let s:cmdpalette_var = {
 
 " Pre-load the internal vim commands
 python << endofpython
-
-with open('./internal_commands.txt') as commands_file:
+import vim
+path_to_script = vim.eval('expand("<sfile>")')
+path_to_commands = path_to_script.replace('cmdpalette.vim', 'internal_commands.txt')
+with open(path_to_commands) as commands_file:
     internal_commands = ['%s\\t%s' % (line.split()[0], ' '.join(line.split()[1:]).replace('"', '\\"'))
                          for line in commands_file.readlines()]
 endofpython
