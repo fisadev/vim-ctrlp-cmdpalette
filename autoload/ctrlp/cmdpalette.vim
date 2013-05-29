@@ -50,7 +50,6 @@ endif
 " where to look for matches
 function! ctrlp#cmdpalette#init()
 python << endofpython
-import vim
 # obtain the custom commands
 vim.command('redir => custom_commands')
 vim.command('silent command')
