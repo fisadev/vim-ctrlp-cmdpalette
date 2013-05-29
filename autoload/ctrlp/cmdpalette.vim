@@ -45,8 +45,17 @@ endif
 "
 " Return: command
 function! ctrlp#cmdpalette#init()
-  let list = execute('command')
-  return list
+python << endofpython
+import vim
+vim.command('redir => commands_list')
+vim.command('silent execute "command"')
+vim.command('redir END')
+commands = [x[4:].split(' ')[0]
+            for x in vim.eval('commands_list').split('\n')
+            if x.strip()]
+
+vim.command('return split("%s")' % ' '.join(commands))
+endofpython
 endfunction
 
 
