@@ -30,7 +30,10 @@ let s:cmdpalette_var = {
 
 " Pre-load the internal vim commands
 python << endofpython
-internal_commands = ['testing\\tinternal testing',]
+
+with open('./internal_commands.txt') as commands_file:
+    internal_commands = ['%s\\t%s' % (line.split()[0], ' '.join(line.split()[1:]).replace('"', '\\"'))
+                         for line in commands_file.readlines()]
 endofpython
 
 " Append s:cmdpalette_var to g:ctrlp_ext_vars
@@ -77,7 +80,7 @@ endfunction
 func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
   call feedkeys(':')
-  call feedkeys(a:str)
+  call feedkeys(split(a:str, '\t')[0])
 endfunc
 
 
