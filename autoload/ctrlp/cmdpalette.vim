@@ -34,8 +34,7 @@ import vim
 path_to_script = vim.eval('expand("<sfile>")')
 path_to_commands = path_to_script.replace('cmdpalette.vim', 'internal_commands.txt')
 with open(path_to_commands) as commands_file:
-    internal_commands = ['%s\\t%s' % (line.split()[0], ' '.join(line.split()[1:]).replace('"', '\\"'))
-                         for line in commands_file.readlines()]
+    internal_commands = [l.strip() for l in commands_file.readlines()]
 endofpython
 
 " Append s:cmdpalette_var to g:ctrlp_ext_vars
