@@ -67,7 +67,8 @@ endfunction
 "  a:str    the selected string
 func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
-  silent execute ':'.a:str
+  call feedkeys(':')
+  call feedkeys(a:str)
 endfunc
 
 
