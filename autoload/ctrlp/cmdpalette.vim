@@ -1,14 +1,10 @@
 " =============================================================================
 " File:          autoload/ctrlp/cmdpalette.vim
-" Description:   cmdpalette extension for ctrlp.vim, based on code from the
+" Description:   cmdpalette extension for ctrlp.vim.
+"                Some of the code is based on the code of the 
 "                plugins at github.com/sgur/ctrlp-extensions.vim
 " =============================================================================
 
-" Change the name of the g:loaded_ variable to make it unique
-if ( exists('g:loaded_ctrlp_cmdpalette') && g:loaded_ctrlp_cmdpalette )
-	\ || v:version < 700 || &cp
-	finish
-endif
 let g:loaded_ctrlp_cmdpalette = 1
 
 " The main variable for this extension.
@@ -41,9 +37,8 @@ else
 endif
 
 
-" Provide a list of strings to search in
-"
-" Return: command
+" This will be called by ctrlp to get the full list of elements
+" where to look for matches
 function! ctrlp#cmdpalette#init()
 python << endofpython
 import vim
@@ -59,8 +54,7 @@ endofpython
 endfunction
 
 
-" The action to perform on the selected string.
-"
+" This will be called by ctrlp when a match is selected by the user
 " Arguments:
 "  a:mode   the mode that has been chosen by pressing <cr> <c-v> <c-t> or <c-x>
 "           the values are 'e', 'v', 't' and 'h', respectively
