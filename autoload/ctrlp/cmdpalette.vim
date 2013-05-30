@@ -28,27 +28,19 @@ let s:cmdpalette_var = {
 	\ 'sort': 0,
 	\ }
 
-" Pre-load the internal vim commands
+
+" Pre-load the vim commands list
+let s:cmdpalette_commands = []
+
 python << endofpython
 import vim
+
+# obtain the internal commands (file distributed with the plugin)
 path_to_script = vim.eval('expand("<sfile>")')
 path_to_commands = path_to_script.replace('cmdpalette.vim', 'internal_commands.txt')
 with open(path_to_commands) as commands_file:
     internal_commands = [l.strip() for l in commands_file.readlines()]
-endofpython
 
-" Append s:cmdpalette_var to g:ctrlp_ext_vars
-if exists('g:ctrlp_ext_vars') && !empty(g:ctrlp_ext_vars)
-	let g:ctrlp_ext_vars = add(g:ctrlp_ext_vars, s:cmdpalette_var)
-else
-	let g:ctrlp_ext_vars = [s:cmdpalette_var]
-endif
-
-
-" This will be called by ctrlp to get the full list of elements
-" where to look for matches
-function! ctrlp#cmdpalette#init()
-python << endofpython
 # obtain the custom commands
 vim.command('redir => custom_commands')
 vim.command('silent command')
@@ -62,10 +54,23 @@ custom_commands = [x[4:].split()[0] + '\\t(custom command)'
 if custom_commands[0].split('\\t')[0] == 'Name':
     del custom_commands[0]
 
-all_commands = custom_commands + internal_commands
-
-vim.command('return split("%s", "XX_SEPARATOR_XX")' % 'XX_SEPARATOR_XX'.join(all_commands))
+for command in custom_commands + internal_commands:
+    vim.eval('add(s:cmdpalette_commands, "%s")' % command)
 endofpython
+
+
+" Append s:cmdpalette_var to g:ctrlp_ext_vars
+if exists('g:ctrlp_ext_vars') && !empty(g:ctrlp_ext_vars)
+	let g:ctrlp_ext_vars = add(g:ctrlp_ext_vars, s:cmdpalette_var)
+else
+	let g:ctrlp_ext_vars = [s:cmdpalette_var]
+endif
+
+
+" This will be called by ctrlp to get the full list of elements
+" where to look for matches
+function! ctrlp#cmdpalette#init()
+  return s:cmdpalette_commands
 endfunction
 
 
