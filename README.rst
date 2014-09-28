@@ -17,13 +17,6 @@ Done! Now you can call ``:CtrlPCmdPalette``, or map it to a keybinding :)
 
 Options
 -------
-<<<<<<< HEAD
-=======
-
-If you want the selected command to be executed by default, add this to your .vimrc
-``let g:ctrlp_cmdpalette_execute=1``
->>>>>>> 48fc1669353bbc639bfe8ce71c3cd4011b0ac4aa
-
 If you want the selected command to be executed by default, add this to your .vimrc
 
 ``let g:ctrlp_cmdpalette_execute=1``
@@ -31,3 +24,4 @@ If you want the selected command to be executed by default, add this to your .vi
 Thanks
 ------
 Special thanks to the creator of `this plugin <https://github.com/sgur/ctrlp-extensions.vim>`_, which allowed me to learn how to extend CtrlP.
+
