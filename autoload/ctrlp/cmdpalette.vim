@@ -1,7 +1,7 @@
 " =============================================================================
 " File:          autoload/ctrlp/cmdpalette.vim
 " Description:   cmdpalette extension for ctrlp.vim.
-"                Some of the code is based on the code of the 
+"                Some of the code is based on the code of the
 "                plugins at github.com/sgur/ctrlp-extensions.vim
 " =============================================================================
 
@@ -83,6 +83,9 @@ func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
   call feedkeys(':')
   call feedkeys(split(a:str, '\t')[0])
+  if exists('g:ctrlp_cmdpalette_execute')
+    call feedkeys("\<CR>")
+  endif
 endfunc
 
 
