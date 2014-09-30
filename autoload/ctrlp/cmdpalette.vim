@@ -32,6 +32,10 @@ let s:cmdpalette_var = {
 " Pre-load the vim commands list
 let s:cmdpalette_commands = []
 
+if !exists('g:ctrlp_cmdpalette_execute')
+  let g:ctrlp_cmdpalette_execute = 0
+endif
+
 python << endofpython
 import vim
 
@@ -83,7 +87,7 @@ func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
   call feedkeys(':')
   call feedkeys(split(a:str, '\t')[0])
-  if exists('g:ctrlp_cmdpalette_execute')
+  if g:ctrlp_cmdpalette_execute == 1
     call feedkeys("\<CR>")
   endif
 endfunc
