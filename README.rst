@@ -19,7 +19,7 @@ Options
 -------
 If you want the selected command to be executed by default, add this to your .vimrc
 
-``let g:ctrlp_cmdpalette_execute=1``
+``let g:ctrlp_cmdpalette_execute = 1``
 
 Thanks
 ------
