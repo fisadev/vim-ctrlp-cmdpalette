@@ -15,5 +15,13 @@ First you will need to have `CtrlP <https://github.com/kien/ctrlp.vim>`_ install
 
 Done! Now you can call ``:CtrlPCmdPalette``, or map it to a keybinding :)
 
+Options
+-------
+If you want the selected command to be executed by default, add this to your .vimrc
 
+``let g:ctrlp_cmdpalette_execute=1``
+
+Thanks
+------
 Special thanks to the creator of `this plugin <https://github.com/sgur/ctrlp-extensions.vim>`_, which allowed me to learn how to extend CtrlP.
+
