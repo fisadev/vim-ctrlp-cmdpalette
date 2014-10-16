@@ -85,6 +85,7 @@ endfunction
 "  a:str    the selected string
 func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
+  redraw
   call feedkeys(':')
   call feedkeys(split(a:str, '\t')[0])
   if g:ctrlp_cmdpalette_execute == 1
