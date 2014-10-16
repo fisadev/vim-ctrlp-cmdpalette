@@ -85,10 +85,10 @@ endfunction
 "  a:str    the selected string
 func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
-  call feedkeys(':')
-  call feedkeys(split(a:str, '\t')[0])
+  call feedkeys(':', 'n')
+  call feedkeys(split(a:str, '\t')[0], 'n')
   if g:ctrlp_cmdpalette_execute == 1
-    call feedkeys("\<CR>")
+    call feedkeys("\<CR>", 'n')
   endif
 endfunc
 
