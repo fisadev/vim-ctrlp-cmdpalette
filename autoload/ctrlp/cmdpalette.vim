@@ -91,6 +91,8 @@ func! ctrlp#cmdpalette#accept(mode, str)
   if g:ctrlp_cmdpalette_execute == 1
     call feedkeys("\<CR>", 'n')
   endif
+  call remove(s:cmdpalette_commands, index(s:cmdpalette_commands, a:str))
+  call insert(s:cmdpalette_commands, a:str)
 endfunc
 
 
