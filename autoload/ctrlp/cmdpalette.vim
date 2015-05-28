@@ -38,6 +38,7 @@ endif
 
 python << endofpython
 import vim
+import json
 
 # obtain the internal commands (file distributed with the plugin)
 path_to_script = vim.eval('expand("<sfile>")')
@@ -51,15 +52,14 @@ vim.command('silent command')
 vim.command('redir END')
 
 # convert to list, remove empties, discard 4 first columns and take first word
-custom_commands = [x[4:].split()[0] + '\\t(custom command)'
+custom_commands = [x[4:].split()[0] + '\t(custom command)'
                    for x in vim.eval('custom_commands').split('\n')
                    if x.strip()]
 # remove header
-if custom_commands[0].split('\\t')[0] == 'Name':
+if custom_commands[0].split('\t')[0] == 'Name':
     del custom_commands[0]
 
-for command in custom_commands + internal_commands:
-    vim.eval('add(s:cmdpalette_commands, "%s")' % command)
+vim.command('let s:cmdpalette_commands = %s' % json.dumps(internal_commands + custom_commands))
 endofpython
 
 
