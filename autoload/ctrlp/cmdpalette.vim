@@ -36,7 +36,18 @@ if !exists('g:ctrlp_cmdpalette_execute')
   let g:ctrlp_cmdpalette_execute = 0
 endif
 
-python << endofpython
+" inspired by the same done in the python-mode plugin
+if has('python')
+  command! -nargs=1 CmdPalettePython python <args>
+elseif has('python3')
+  command! -nargs=1 CmdPalettePython python3 <args>
+else
+  echo "Could't initialize CtrlP CmdPalette: needs a python interpreter in vim"
+  finish
+endif
+
+
+CmdPalettePython << endofpython
 import vim
 import json
 
@@ -60,6 +71,7 @@ if custom_commands[0].split('\t')[0] == 'Name':
     del custom_commands[0]
 
 vim.command('let s:cmdpalette_commands = %s' % json.dumps(internal_commands + custom_commands))
+
 endofpython
 
 
