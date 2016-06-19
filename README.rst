@@ -10,6 +10,7 @@ Installation
 
 First you will need to have `CtrlP <https://github.com/kien/ctrlp.vim>`_ installed and a vim compiled with python support. Once you have that:
 
+* If you use `Vim-plug <https://github.com/junegunn/vim-plug>`_, add this to your plugins list: ``Plug 'fisadev/vim-ctrlp-cmdpalette'``.
 * If you use `Vundle <https://github.com/gmarik/vundle>`_, add this to your bundles list: ``Bundle 'fisadev/vim-ctrlp-cmdpalette'``.
 * If you use `Patogen <https://github.com/tpope/vim-pathogen>`_, clone this repo inside your bundles dir.
 
