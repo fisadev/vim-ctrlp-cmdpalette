@@ -105,7 +105,9 @@ func! ctrlp#cmdpalette#accept(mode, str)
   endif
   call remove(s:cmdpalette_commands, index(s:cmdpalette_commands, a:str))
   call insert(s:cmdpalette_commands, a:str)
-	call feedkeys(" ", 'n')
+	if a:mode != 'e'
+		call feedkeys(" ", 'n')
+	endif
 endfunc
 
 
