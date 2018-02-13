@@ -63,7 +63,7 @@ vim.command('silent command')
 vim.command('redir END')
 
 # convert to list, remove empties, discard 4 first columns and take first word
-custom_commands = ['  ' + x[4:].split()[0] + ' *'
+custom_commands = ['  ' + x[4:].split()[0] + '\t*'
                    for x in vim.eval('custom_commands').split('\n')
                    if x.strip()]
 # remove header
