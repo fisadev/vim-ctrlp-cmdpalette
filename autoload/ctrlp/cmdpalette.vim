@@ -98,6 +98,8 @@ endfunction
 func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
   redraw
+  let g:ctrlp_open_mode = a:mode
+  let g:ctrlp_open_cmd = a:str
   call feedkeys(':', 'n')
   call feedkeys(split(a:str, '\t')[0], 'n')
   if a:mode == 'e' && g:ctrlp_cmdpalette_execute == 1
