@@ -98,10 +98,14 @@ endfunction
 func! ctrlp#cmdpalette#accept(mode, str)
   call ctrlp#exit()
   redraw
+  let g:ctrlp_open_mode = a:mode
+  let g:ctrlp_open_cmd = a:str
   call feedkeys(':', 'n')
   call feedkeys(split(a:str, '\t')[0], 'n')
-  if g:ctrlp_cmdpalette_execute == 1
+  if a:mode == 'e' && g:ctrlp_cmdpalette_execute == 1
     call feedkeys("\<CR>", 'n')
+  else
+    call feedkeys(" ", 'n')
   endif
   call remove(s:cmdpalette_commands, index(s:cmdpalette_commands, a:str))
   call insert(s:cmdpalette_commands, a:str)
