@@ -104,12 +104,11 @@ func! ctrlp#cmdpalette#accept(mode, str)
   call feedkeys(split(a:str, '\t')[0], 'n')
   if a:mode == 'e' && g:ctrlp_cmdpalette_execute == 1
     call feedkeys("\<CR>", 'n')
+  else
+    call feedkeys(" ", 'n')
   endif
   call remove(s:cmdpalette_commands, index(s:cmdpalette_commands, a:str))
   call insert(s:cmdpalette_commands, a:str)
-	if a:mode != 'e'
-		call feedkeys(" ", 'n')
-	endif
 endfunc
 
 
