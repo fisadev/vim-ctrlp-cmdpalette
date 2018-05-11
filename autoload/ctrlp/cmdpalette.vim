@@ -89,6 +89,23 @@ function! ctrlp#cmdpalette#init()
   return s:cmdpalette_commands
 endfunction
 
+function! ctrlp#cmdpalette#need_arg(cmd)
+  redir => cmd_verbose
+  silent execute("command " .a:cmd)
+  redir END
+
+  let cmd_lines = split(cmd_verbose, '\n')
+  if len(cmd_lines) < 2 | return 0 | endif
+
+  let cmd_arg_num = split(cmd_lines[1])[1]
+
+  if cmd_arg_num == '+' || cmd_arg_num > 0
+    return 1
+  endif
+
+  return 0
+endfunction
+
 
 " This will be called by ctrlp when a match is selected by the user
 " Arguments:
@@ -101,8 +118,9 @@ func! ctrlp#cmdpalette#accept(mode, str)
   let g:ctrlp_open_mode = a:mode
   let g:ctrlp_open_cmd = a:str
   call feedkeys(':', 'n')
-  call feedkeys(split(a:str, '\t')[0], 'n')
-  if a:mode == 'e' && g:ctrlp_cmdpalette_execute == 1
+  let cmd_name = split(a:str, '\t')[0]
+  call feedkeys(cmd_name, 'n')
+  if (a:mode == 'e' && g:ctrlp_cmdpalette_execute == 1) && !(ctrlp#cmdpalette#need_arg(cmd_name))
     call feedkeys("\<CR>", 'n')
   else
     call feedkeys(" ", 'n')
