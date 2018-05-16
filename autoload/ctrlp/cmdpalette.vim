@@ -38,22 +38,25 @@ endif
 
 " inspired by the same done in the python-mode plugin
 if has('python')
-  command! -nargs=1 CmdPalettePython python <args>
+  let s:python_cmd = "python"
 elseif has('python3')
-  command! -nargs=1 CmdPalettePython python3 <args>
+  let s:python_cmd = "python3"
 else
   echo "Could't initialize CtrlP CmdPalette: needs a python interpreter in vim"
   finish
 endif
 
+let s:path_to_commands = printf("%s/%s", expand("<sfile>:p:h"), "internal_commands.txt")
 
-CmdPalettePython << endofpython
+function! ctrlp#cmdpalette#load_commands_info()
+
+execute s:python_cmd . "<< endofpython"
 import vim
 import json
 
 # obtain the internal commands (file distributed with the plugin)
-path_to_script = vim.eval('expand("<sfile>")')
-path_to_commands = path_to_script.replace('cmdpalette.vim', 'internal_commands.txt')
+path_to_script = vim.eval('expand("<sfile>:p")')
+path_to_commands = vim.eval('s:path_to_commands')
 with open(path_to_commands) as commands_file:
     internal_commands = [l.strip() for l in commands_file.readlines()]
 
@@ -74,12 +77,15 @@ vim.command('let s:cmdpalette_commands = %s' % json.dumps(internal_commands + cu
 
 endofpython
 
+endfunction
+
+call ctrlp#cmdpalette#load_commands_info()
 
 " Append s:cmdpalette_var to g:ctrlp_ext_vars
 if exists('g:ctrlp_ext_vars') && !empty(g:ctrlp_ext_vars)
-	let g:ctrlp_ext_vars = add(g:ctrlp_ext_vars, s:cmdpalette_var)
+  let g:ctrlp_ext_vars = add(g:ctrlp_ext_vars, s:cmdpalette_var)
 else
-	let g:ctrlp_ext_vars = [s:cmdpalette_var]
+  let g:ctrlp_ext_vars = [s:cmdpalette_var]
 endif
 
 
