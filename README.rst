@@ -1,7 +1,7 @@
 Vim-CtrlP-CmdPalette
 ====================
 
-This is an extension for the awesome vim `CtrlP <https://github.com/kien/ctrlp.vim>`_ plugin.
+This is an extension for the awesome vim `CtrlP <https://github.com/ctrlpvim/ctrlp.vim>`_ plugin.
 
 This extension adds a new CtrlP command, the ``:CtrlPCmdPalette``, which allows you to find and run vim commands (internal or custom).
 
